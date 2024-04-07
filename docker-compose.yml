@@ -10,3 +10,11 @@ services:
      - POSTGRES_PASSWORD=qwerty
     ports: 
     - 5432:5432
+  
+  cache:
+    restart: always
+    image: redis:latest
+    environment:
+      REDIS_PASSWORD: "qwerty"
+    ports: 
+    - 6379:6379
