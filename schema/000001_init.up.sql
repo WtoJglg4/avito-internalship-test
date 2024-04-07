@@ -26,3 +26,11 @@ CREATE INDEX features_id_idx ON features(id);
 CREATE INDEX tags_id_idx ON tags(id);
 
 CREATE INDEX banners_id_idx ON banners(id);
+
+CREATE TABLE users
+(
+    id              serial not null unique,
+    login           varchar(255) not null unique, 
+    password_hash   varchar(255) not null,
+    role            varchar(255) not null
+);

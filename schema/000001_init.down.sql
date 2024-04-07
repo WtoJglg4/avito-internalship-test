@@ -11,3 +11,5 @@ DROP banners;
 DROP tags;
 
 DROP features;
+
+DROP users;
