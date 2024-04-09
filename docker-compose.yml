@@ -1,15 +1,16 @@
 version: '3.8'
 
 services:
+
+
   db:
     restart: always
     image: postgres:latest
-    volumes:
-      - ./.database/postgres/data:/var/lib/postgresql/data
     environment:
      - POSTGRES_PASSWORD=qwerty
     ports: 
     - 5432:5432
+    # command: docker exec -i avito-db-1 psql -U postgres -d postgres < ./schema/000001_init.up.sql
   
   cache:
     restart: always
