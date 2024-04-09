@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 func (h *Handler) signUp(c *gin.Context) {
@@ -32,6 +33,8 @@ func (h *Handler) signIn(c *gin.Context) {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
+
+	logrus.Println(inputUser)
 
 	token, err := h.service.GenerateToken(inputUser.Login, inputUser.Password)
 	if err != nil {

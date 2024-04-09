@@ -1,7 +1,7 @@
 package service
 
 import (
-	"crypto/sha256"
+	"crypto/sha1"
 	"fmt"
 	"github/avito/entities"
 	"github/avito/pkg/repository"
@@ -53,7 +53,7 @@ func (s *AuthService) GenerateToken(login, password string) (string, error) {
 }
 
 func generatePasswordHash(password string) string {
-	hash := sha256.New()
-	hash.Sum([]byte(password))
+	hash := sha1.New()
+	hash.Write([]byte(password))
 	return fmt.Sprintf("%x", string(hash.Sum([]byte(sault))))
 }

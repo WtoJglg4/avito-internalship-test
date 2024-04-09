@@ -5,6 +5,7 @@ import (
 
 	"github.com/huandu/go-sqlbuilder"
 	"github.com/jmoiron/sqlx"
+	"github.com/sirupsen/logrus"
 )
 
 const (
@@ -48,6 +49,7 @@ func (r *AuthPostgres) GetUser(login, password string) (entities.User, error) {
 			sb.Equal("password_hash", password),
 		).Build()
 
+	logrus.Println(sql, args)
 	err := r.db.Get(&user, sql, args...)
 	return user, err
 }
