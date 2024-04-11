@@ -240,7 +240,7 @@ paths:
             type: integer
             description: Идентификатор тега
       responses:
-        '204':
+        '200':
           description: Баннеры успешно удалены
         '400':
           description: Некорректные данные
@@ -521,7 +521,7 @@ paths:
                 properties:
                   error:
                     type: string
-
+//Authentification
   /auth/sign-up:
     post:
       summary: Создание нового пользователя

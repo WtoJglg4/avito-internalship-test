@@ -2,6 +2,7 @@ package service
 
 import (
 	"crypto/sha1"
+	"errors"
 	"fmt"
 	"github/avito/entities"
 	"github/avito/pkg/repository"
@@ -56,4 +57,24 @@ func generatePasswordHash(password string) string {
 	hash := sha1.New()
 	hash.Write([]byte(password))
 	return fmt.Sprintf("%x", string(hash.Sum([]byte(sault))))
+}
+
+func (s *AuthService) ParseToken(accesToken string) (int, string, error) {
+	token, err := jwt.ParseWithClaims(accesToken, &tokenClaims{}, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, errors.New("invalid signing method")
+		}
+
+		return []byte(signingKey), nil
+	})
+
+	if err != nil {
+		return 0, "", err
+	}
+
+	claims, ok := token.Claims.(*tokenClaims)
+	if !ok {
+		return 0, "", errors.New("token claims are not of type *tokenClaims")
+	}
+	return claims.UserId, claims.UserRole, nil
 }

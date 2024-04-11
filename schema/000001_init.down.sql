@@ -13,3 +13,7 @@ DROP tags;
 DROP features;
 
 DROP users;
+
+DROP banner_versions;
+
+DROP banner_versions_banner_id_idx;

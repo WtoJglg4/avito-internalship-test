@@ -13,6 +13,9 @@ type Authorization interface {
 
 type Banner interface {
 	CreateBanner(entities.Banner) (int, error)
+	GetAllBanners(entities.QueryFilters) ([]entities.Banner, error)
+	DeleteBanners(entities.QueryFilters) error
+	UserBanner(entities.QueryFilters) (entities.Content, error)
 }
 
 type Service struct {

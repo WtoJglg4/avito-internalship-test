@@ -12,6 +12,10 @@ type Authorization interface {
 }
 
 type Banner interface {
+	CreateBanner(entities.Banner) (int, error)
+	GetAllBanners(entities.QueryFilters) ([]entities.Banner, error)
+	DeleteBanners(entities.QueryFilters) error
+	UserBanner(entities.QueryFilters) (entities.Content, error)
 }
 
 type Repository struct {
@@ -22,5 +26,6 @@ type Repository struct {
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
+		Banner:        NewBannersPostgres(db),
 	}
 }

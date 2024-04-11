@@ -34,7 +34,7 @@ func (h *Handler) userIdentity(c *gin.Context) (int, string, error) {
 		return 0, "", errors.New("token is empty")
 	}
 
-	logrus.Println(headerParts)
+	// logrus.Println(headerParts)
 
 	userId, userRole, err := h.service.Authorization.ParseToken(headerParts[1])
 	if err != nil {

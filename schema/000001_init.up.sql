@@ -12,14 +12,29 @@ CREATE TABLE tags (
 CREATE TABLE banners (
     id serial not null unique,
     feature_id int references features(id) on delete set null,
-    content  json not null, 
-    is_active bool not null default true
+    content  jsonb not null, 
+    is_active bool not null default true,
+    version integer not null, 
+    created_at timestamp not null, 
+    updated_at timestamp not null, 
+    tags_hash varchar(255) not null
 );
 
 CREATE TABLE banner_tags (
     banner_id int references banners(id) on delete cascade,
     tag_id int references tags(id) on delete cascade
 );
+
+CREATE TABLE banner_versions (
+    id serial not null unique,
+    banner_id int references banners(id) on delete cascade,
+    content json not null,
+    version integer not null, 
+    updated_at timestamp not null,
+    is_active bool not null default false
+);
+
+CREATE INDEX banner_versions_banner_id_idx ON banner_versions(banner_id);
 
 CREATE INDEX features_id_idx ON features(id);
 
