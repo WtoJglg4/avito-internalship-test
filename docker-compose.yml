@@ -1,8 +1,6 @@
 version: '3.8'
 
 services:
-
-
   db:
     restart: always
     image: postgres:latest
@@ -19,3 +17,15 @@ services:
       REDIS_PASSWORD: "qwerty"
     ports: 
     - 6379:6379
+    
+  api:
+    build: ./
+    command: ./wait-for-postgres.sh db ./main
+    ports: 
+    - 3000:3000
+    depends_on:
+      - db
+    environment:
+      - DB_PASSWORD=qwerty
+
+ 
