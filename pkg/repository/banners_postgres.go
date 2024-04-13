@@ -293,15 +293,12 @@ func (r *BannersPostgres) DeleteBanners(filters entities.QueryFilters) error {
 var ErrNoRowsSelected = errors.New("banner not found")
 
 func (r *BannersPostgres) UserBanner(filters entities.QueryFilters) (entities.Content, error) {
-	where := "WHERE "
+	where := "WHERE b.is_active = true "
 	if filters.Feature_id != -1 {
-		where += fmt.Sprintf("b.feature_id = %d ", filters.Feature_id)
+		where += fmt.Sprintf("AND b.feature_id = %d ", filters.Feature_id)
 	}
 	if filters.Tags_id != -1 {
-		if filters.Feature_id != -1 {
-			where += "AND "
-		}
-		where += fmt.Sprintf("bt.tag_id = %d", filters.Tags_id)
+		where += fmt.Sprintf("AND bt.tag_id = %d", filters.Tags_id)
 	}
 	query := "SELECT b.content FROM banners b join banner_tags bt on b.id = bt.banner_id " + where
 
@@ -335,4 +332,18 @@ func (r *BannersPostgres) UserBanner(filters entities.QueryFilters) (entities.Co
 	}
 
 	return bannerContent, nil
+}
+
+func (r *BannersPostgres) InsertTestTags() {
+	query := fmt.Sprintf("INSERT INTO %s (name) VALUES ('test')", tagsTable)
+	for i := 0; i < 100; i++ {
+		r.db.Exec(query)
+	}
+}
+
+func (r *BannersPostgres) InsertTestFeatures() {
+	query := fmt.Sprintf("INSERT INTO %s (name) VALUES ('test')", featuresTable)
+	for i := 0; i < 100; i++ {
+		r.db.Exec(query)
+	}
 }

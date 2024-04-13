@@ -16,6 +16,8 @@ type Banner interface {
 	GetAllBanners(entities.QueryFilters) ([]entities.Banner, error)
 	DeleteBanners(entities.QueryFilters) error
 	UserBanner(entities.QueryFilters) (entities.Content, error)
+	InsertTestTags()
+	InsertTestFeatures()
 }
 
 type Repository struct {

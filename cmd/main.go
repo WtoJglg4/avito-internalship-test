@@ -43,6 +43,9 @@ func main() {
 	repo := repository.NewRepository(db)
 	services := service.NewService(repo)
 	router := handler.NewHandler(services)
+	repo.InsertTestFeatures()
+	repo.InsertTestTags()
+
 	srv := new(entities.Server)
 
 	if _, err := services.Authorization.CreateUser(entities.User{
